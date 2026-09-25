@@ -1,0 +1,43 @@
+{
+  "info": {
+    "name": "Kanban API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080" },
+    { "key": "responsibleId", "value": "" },
+    { "key": "projectId", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/health" }
+    },
+    {
+      "name": "Cadastrar responsável",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"name\": \"Ana Silva\",\n  \"email\": \"ana@example.com\",\n  \"jobTitle\": \"Gerente de Projetos\"\n}" },
+        "url": "{{baseUrl}}/api/responsibles"
+      }
+    },
+    {
+      "name": "Cadastrar projeto",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"name\": \"Implantação do portal\",\n  \"responsibleIds\": [\"{{responsibleId}}\"],\n  \"plannedStartDate\": \"2026-09-25\",\n  \"plannedEndDate\": \"2026-10-25\",\n  \"actualStartDate\": null,\n  \"actualEndDate\": null\n}" },
+        "url": "{{baseUrl}}/api/projects"
+      }
+    },
+    {
+      "name": "Listar coluna Em andamento",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/projects?status=IN_PROGRESS&page=0&size=20" }
+    },
+    {
+      "name": "Concluir projeto",
+      "request": { "method": "POST", "url": "{{baseUrl}}/api/projects/{{projectId}}/transitions/COMPLETED" }
+    }
+  ]
+}
